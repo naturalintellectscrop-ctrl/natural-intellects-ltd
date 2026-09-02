@@ -20,3 +20,12 @@ body { margin:0; background:var(--background); color:var(--foreground); font-fam
 @media (prefers-reduced-motion:reduce) { *,*::before,*::after { scroll-behavior:auto!important; animation-duration:.001ms!important; transition-duration:.001ms!important; } }
 @keyframes reveal { from { opacity:0; transform:translateY(14px); } to { opacity:1; transform:translateY(0); } }
 @keyframes orbit { to { transform:rotate(360deg); } }
+.reveal-section, .reveal-card, .team-entry { opacity:1; }
+@media (prefers-reduced-motion:no-preference) {
+  .reveal-card, .team-entry { animation: reveal .7s both; animation-timeline: view(); animation-range: entry 0% cover 25%; }
+  .reveal-card:nth-child(2), .team-entry:nth-child(2) { animation-delay: .08s; }
+  .reveal-card:nth-child(3), .team-entry:nth-child(3) { animation-delay: .16s; }
+  .reveal-card:nth-child(4) { animation-delay: .24s; }
+  .reveal-section { animation: section-in .9s both; animation-timeline: view(); animation-range: entry 0% cover 22%; }
+}
+
