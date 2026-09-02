@@ -11,9 +11,12 @@ body { margin:0; background:var(--background); color:var(--foreground); font-fam
 .eyebrow { color:var(--accent-soft); font:11px/1.2 var(--font-mono),monospace; letter-spacing:.16em; text-transform:uppercase; }
 .mono { font-family:var(--font-mono),monospace; }
 .team-placeholder { display:grid; min-height:190px; place-items:center; border:1px solid var(--line); background:linear-gradient(135deg,var(--panel),var(--background)); color:var(--accent); font:11px var(--font-mono); letter-spacing:.16em; }
-.technical-orbit { animation:orbit 18s linear infinite; }
+.technical-orbit { animation:orbit 18s linear infinite; transform-origin:center; }
 .timeline-item { animation:reveal .8s both; }
-@media (prefers-reduced-motion:no-preference) { a,button { transition:color .2s ease,background-color .2s ease,border-color .2s ease,transform .2s ease; } .reveal { animation:reveal .8s both; } }
+@media (prefers-reduced-motion:no-preference) { a,button { transition:color .2s ease,background-color .2s ease,border-color .2s ease,transform .2s ease; } .reveal { animation:reveal .8s both; } section:not(#top) { animation:section-in .9s both; animation-timeline:view(); animation-range:entry 0% cover 28%; } .ni-system > div { transition:transform .35s ease,color .35s ease; } .ni-system > div:hover { transform:translateX(10px); color:var(--accent); } .marquee-track { animation:marquee 26s linear infinite; } .marquee:hover .marquee-track { animation-play-state:paused; } }
+@media (min-width:1280px) { .site-wide { max-width:96rem; } }
+@keyframes section-in { from { opacity:.15; transform:translateY(28px); } to { opacity:1; transform:translateY(0); } }
+@keyframes marquee { to { transform:translateX(-50%); } }
 @media (prefers-reduced-motion:reduce) { *,*::before,*::after { scroll-behavior:auto!important; animation-duration:.001ms!important; transition-duration:.001ms!important; } }
 @keyframes reveal { from { opacity:0; transform:translateY(14px); } to { opacity:1; transform:translateY(0); } }
 @keyframes orbit { to { transform:rotate(360deg); } }
