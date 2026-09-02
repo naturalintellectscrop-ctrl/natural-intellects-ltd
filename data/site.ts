@@ -1,6 +1,10 @@
 export type Status = 'ACTIVE' | 'IN DEVELOPMENT' | 'UPCOMING' | 'CONCEPT' | 'R&D'
 
-export const contact = { whatsapp: '', email: '' }
+export const contact = {
+  whatsapp: 'https://wa.me/256752255676',
+  email: 'naturalintellectsltd@gmail.com',
+  phones: ['+256 785 710 818', '+256 752 255 676'],
+}
 
 export const capabilities = [
   { slug: 'digital-products', number: '01', title: 'Digital Products', description: 'From first principle to useful interface.', longDescription: 'We shape focused digital products around real needs, clear journeys and room to evolve.', projects: ['smart-ride', 'nisms', 'house-for-rent', 'disms'], approach: ['Discover the real constraint', 'Design the simplest useful system', 'Build, learn and evolve'] },
