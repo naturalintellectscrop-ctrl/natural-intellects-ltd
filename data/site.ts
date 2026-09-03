@@ -29,6 +29,16 @@ export const innovation = [
   { slug: 'ni-socket', name: 'NI Socket', status: 'R&D' as Status, category: 'EV charging & battery swap', description: 'A sustainable mobility infrastructure direction involving charging points and fast battery-swap hubs.' },
 ] as const
 
+export const workArchive = [
+  { name: 'ACA', logo: '/work-done/aca.png', width: 93, height: 56 },
+  { name: 'Aicher IT', logo: '/work-done/aicherit.png', width: 225, height: 76 },
+  { name: 'Daily Sports', logo: '/work-done/dailsports.png', width: 238, height: 65 },
+  { name: 'IPD', logo: '/work-done/ipd.jpg', width: 513, height: 486 },
+  { name: 'Sorriso Hostesses', logo: '/work-done/sorrisohostesses.png', width: 279, height: 46 },
+  { name: 'UFMI', logo: '/work-done/ufmi.png', width: 91, height: 66 },
+  { name: 'WUFPA', logo: '/work-done/wufpa.png', width: 70, height: 57 },
+] as const
+
 export const team = [
   { name: 'Team member', role: 'Natural Intellects', bio: 'Profile details will be added as the team information is published.' },
   { name: 'Team member', role: 'Natural Intellects', bio: 'Profile details will be added as the team information is published.' },
