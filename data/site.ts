@@ -3,8 +3,17 @@ export type Status = 'ACTIVE' | 'IN DEVELOPMENT' | 'UPCOMING' | 'CONCEPT' | 'R&D
 export const contact = {
   whatsapp: 'https://wa.me/256752255676',
   email: 'naturalintellectsltd@gmail.com',
-  phones: ['+256 785 710 818', '+256 752 255 676'],
+  phones: ['+26752255676', '+256762449504'],
 }
+
+export const services = [
+  { number: '01', title: 'Website Development & Maintenance', description: 'Modern, responsive and secure websites that keep businesses running online.', capability: 'Digital Products' },
+  { number: '02', title: 'Graphics Designing', description: 'Creative, professional and impactful visual designs that help brands stand out.', capability: 'Digital Products' },
+  { number: '03', title: 'Social Media Marketing', description: 'Help businesses grow their brand, engage their audience and strengthen their online presence.', capability: 'Digital Products' },
+  { number: '04', title: 'Computer Software & Hardware Installation', description: 'Reliable installation and setup for effective computer systems and technology infrastructure.', capability: 'Technology Exploration' },
+  { number: '05', title: 'App Development & Updating', description: 'Custom applications built around specific needs, with ongoing updates where required.', capability: 'Software Platforms' },
+  { number: '06', title: 'School, Office & Domestic System Development', description: 'Smart, tailored systems for schools, offices and appropriate domestic use cases.', capability: 'Business Systems' },
+] as const
 
 export const capabilities = [
   { slug: 'digital-products', number: '01', title: 'Digital Products', description: 'From first principle to useful interface.', longDescription: 'We shape focused digital products around real needs, clear journeys and room to evolve.', projects: ['smart-ride', 'nisms', 'house-for-rent', 'disms'], approach: ['Discover the real constraint', 'Design the simplest useful system', 'Build, learn and evolve'] },
