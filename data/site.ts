@@ -37,6 +37,8 @@ export const workArchive = [
   { name: 'Sorriso Hostesses', logo: '/work-done/ni/sorrisohostesses.png', width: 279, height: 46 },
   { name: 'UFMI', logo: '/work-done/ni/ufmi.png', width: 91, height: 66 },
   { name: 'WUFPA', logo: '/work-done/ni/wufpa.png', width: 70, height: 57 },
+  { name: 'Smart Ride', logo: '/work-done/ni/smart-ride.png', width: 1254, height: 1254 },
+  { name: 'House For Rent', logo: '/work-done/ni/house-for-rent.png', width: 774, height: 768 },
 ] as const
 
 export const team = [
