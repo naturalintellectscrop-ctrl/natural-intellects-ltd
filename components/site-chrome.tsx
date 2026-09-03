@@ -6,7 +6,7 @@ import { useEffect, useState } from 'react'
 
 export function ThemeToggle() {
   const [dark, setDark] = useState(true)
-  useEffect(() => { setDark(document.documentElement.classList.contains('dark')) }, [])
+  useEffect(() => { const saved = document.cookie.match(/(?:^|; )ni-theme=(dark|light)/)?.[1]; const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches; const next = saved ? saved === 'dark' : prefersDark; setDark(next); document.documentElement.classList.toggle('dark', next) }, [])
   function toggle() { const next = !dark; setDark(next); document.documentElement.classList.toggle('dark', next); document.cookie = `ni-theme=${next ? 'dark' : 'light'}; path=/; max-age=31536000` }
   return <button onClick={toggle} aria-label={`Switch to ${dark ? 'light' : 'dark'} theme`} className="border border-line p-3 text-muted hover:border-accent hover:text-accent">{dark ? <Sun className="size-4" /> : <Moon className="size-4" />}</button>
 }
