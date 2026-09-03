@@ -23,8 +23,13 @@ body { margin:0; background:var(--background); color:var(--foreground); font-fam
 .work-logo::after { content:''; position:absolute; inset:0; pointer-events:none; background:linear-gradient(90deg,transparent,color-mix(in srgb,var(--accent) 20%,transparent),transparent); opacity:0; transform:translateX(-100%); transition:opacity .4s ease,transform .7s ease; }
 .work-logo:hover::after { opacity:1; transform:translateX(100%); }
 .ni-logo { filter:grayscale(1) brightness(1.8) contrast(1.05); mix-blend-mode:screen; }
-html:not(.dark) .ni-logo { filter:grayscale(1) brightness(.48) contrast(1.2); mix-blend-mode:multiply; }
+html:not(.dark) .ni-logo { filter:invert(1) grayscale(1) contrast(1.35); mix-blend-mode:multiply; }
 .archive-toggle svg { width:14px; height:14px; }
+.mobile-menu { transform-origin:top; animation:menu-in .28s ease-out both; }
+.mobile-menu a { animation:menu-link-in .35s ease-out both; }
+.mobile-menu a:nth-child(2) { animation-delay:.04s; } .mobile-menu a:nth-child(3) { animation-delay:.08s; } .mobile-menu a:nth-child(4) { animation-delay:.12s; } .mobile-menu a:nth-child(5) { animation-delay:.16s; } .mobile-menu a:nth-child(6) { animation-delay:.2s; }
+@keyframes menu-in { from { opacity:0; transform:scaleY(.92) translateY(-8px); } to { opacity:1; transform:none; } }
+@keyframes menu-link-in { from { opacity:0; transform:translateX(-10px); } to { opacity:1; transform:none; } }
 @media (max-width:639px) { .marquee { mask-image:linear-gradient(to right,transparent,black 4%,black 96%,transparent); } .work-logo { width:15rem; height:8rem; } .marquee-track { gap:.75rem; } }
 @media (prefers-reduced-motion:reduce) { .marquee-track { animation:none!important; } .work-logo::after { display:none; } } }
 @media (min-width:1280px) { .site-wide { max-width:96rem; } }
@@ -47,9 +52,26 @@ html:not(.dark) .ni-logo { filter:grayscale(1) brightness(.48) contrast(1.2); mi
 .reveal-section, .reveal-card, .team-entry { opacity:1; }
 @media (prefers-reduced-motion:no-preference) {
   .reveal-card, .team-entry { animation: reveal .7s both; animation-timeline: view(); animation-range: entry 0% cover 25%; }
-  .reveal-card:nth-child(2), .team-entry:nth-child(2) { animation-delay: .08s; }
-  .reveal-card:nth-child(3), .team-entry:nth-child(3) { animation-delay: .16s; }
-  .reveal-card:nth-child(4) { animation-delay: .24s; }
-  .reveal-section { animation: section-in .9s both; animation-timeline: view(); animation-range: entry 0% cover 22%; }
+  .reveal-card:nth-child(odd) { --entry-x:-18px; }
+  .reveal-card:nth-child(even) { --entry-x:18px; }
+  .reveal-card { animation-name:mobile-reveal; }
+  .work-logo { transition:transform .45s cubic-bezier(.22,1,.36,1),border-color .3s ease,opacity .45s ease; }
+  .work-logo:hover, .work-logo:focus-within { transform:translateY(-5px) scale(1.025); }
+  .archive-toggle:active, a:active, button:active { transform:scale(.97); }
 }
+@media (max-width:639px) and (prefers-reduced-motion:no-preference) {
+  section:not(#top) { animation-name:mobile-section-in; animation-range:entry 0% cover 22%; }
+  .reveal-card:nth-child(odd) { animation-name:mobile-reveal-left; }
+  .reveal-card:nth-child(even) { animation-name:mobile-reveal-right; }
+  .reveal-card:nth-child(2), .team-entry:nth-child(2) { animation-delay:.12s; }
+  .reveal-card:nth-child(3), .team-entry:nth-child(3) { animation-delay:.22s; }
+  .reveal-card:nth-child(4) { animation-delay:.32s; }
+  .marquee { animation:mobile-archive-in .85s both; animation-timeline:view(); animation-range:entry 0% cover 30%; }
+  .marquee-track { animation-duration:38s; }
+}
+@keyframes mobile-reveal { from { opacity:0; transform:translate3d(var(--entry-x,0),18px,0) scale(.97); } to { opacity:1; transform:translate3d(0,0,0) scale(1); } }
+@keyframes mobile-reveal-left { from { opacity:0; transform:translate3d(-22px,14px,0) scale(.98); } to { opacity:1; transform:none; } }
+@keyframes mobile-reveal-right { from { opacity:0; transform:translate3d(22px,14px,0) scale(.98); } to { opacity:1; transform:none; } }
+@keyframes mobile-section-in { from { opacity:0; transform:translateY(24px); } to { opacity:1; transform:none; } }
+@keyframes mobile-archive-in { from { opacity:0; transform:translateY(20px); } to { opacity:1; transform:none; } }
 
