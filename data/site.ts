@@ -30,13 +30,13 @@ export const innovation = [
 ] as const
 
 export const workArchive = [
-  { name: 'ACA', logo: '/work-done/aca.png', width: 93, height: 56 },
-  { name: 'Aicher IT', logo: '/work-done/aicherit.png', width: 225, height: 76 },
-  { name: 'Daily Sports', logo: '/work-done/dailsports.png', width: 238, height: 65 },
-  { name: 'IPD', logo: '/work-done/ipd.jpg', width: 513, height: 486 },
-  { name: 'Sorriso Hostesses', logo: '/work-done/sorrisohostesses.png', width: 279, height: 46 },
-  { name: 'UFMI', logo: '/work-done/ufmi.png', width: 91, height: 66 },
-  { name: 'WUFPA', logo: '/work-done/wufpa.png', width: 70, height: 57 },
+  { name: 'ACA', logo: '/work-done/ni/aca.png', width: 93, height: 56 },
+  { name: 'Aicher IT', logo: '/work-done/ni/aicherit.png', width: 225, height: 76 },
+  { name: 'Daily Sports', logo: '/work-done/ni/dailsports.png', width: 238, height: 65 },
+  { name: 'IPD', logo: '/work-done/ni/ipd.png', width: 513, height: 486 },
+  { name: 'Sorriso Hostesses', logo: '/work-done/ni/sorrisohostesses.png', width: 279, height: 46 },
+  { name: 'UFMI', logo: '/work-done/ni/ufmi.png', width: 91, height: 66 },
+  { name: 'WUFPA', logo: '/work-done/ni/wufpa.png', width: 70, height: 57 },
 ] as const
 
 export const team = [
