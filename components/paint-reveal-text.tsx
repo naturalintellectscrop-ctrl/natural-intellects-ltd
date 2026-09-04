@@ -7,11 +7,12 @@ type PaintRevealTextProps = {
   className?: string
   revealColor?: string
   radius?: number
+  background?: boolean
 }
 
 type Point = { x: number; y: number; life: number }
 
-export function PaintRevealText({ children, className = '', revealColor = 'var(--accent)', radius = 26 }: PaintRevealTextProps) {
+export function PaintRevealText({ children, className = '', revealColor = 'var(--accent)', radius = 26, background = false }: PaintRevealTextProps) {
   const rootRef = useRef<HTMLSpanElement>(null)
   const pointsRef = useRef<Point[]>([])
   const frameRef = useRef<number | null>(null)
@@ -34,9 +35,9 @@ export function PaintRevealText({ children, className = '', revealColor = 'var(-
 
   useEffect(() => () => { if (frameRef.current !== null) cancelAnimationFrame(frameRef.current) }, [])
 
-  return <span ref={rootRef} className={`paint-reveal relative inline-block ${className}`} onPointerMove={(event) => { if (event.pointerType !== 'touch') paint(event.clientX, event.clientY) }} onPointerEnter={(event) => { if (event.pointerType !== 'touch') paint(event.clientX, event.clientY) }} onTouchStart={(event) => paint(event.touches[0].clientX, event.touches[0].clientY)} onTouchMove={(event) => paint(event.touches[0].clientX, event.touches[0].clientY)}>
+  return <span ref={rootRef} className={`paint-reveal relative inline-block ${className}`} data-background={background ? 'true' : undefined} onPointerMove={(event) => { if (event.pointerType !== 'touch') paint(event.clientX, event.clientY) }} onPointerEnter={(event) => { if (event.pointerType !== 'touch') paint(event.clientX, event.clientY) }} onTouchStart={(event) => paint(event.touches[0].clientX, event.touches[0].clientY)} onTouchMove={(event) => paint(event.touches[0].clientX, event.touches[0].clientY)}>
     <span aria-hidden="true" className="pointer-events-none absolute inset-0 text-[color:var(--paint-color)]" style={{ '--paint-color': revealColor } as CSSProperties}>{children}</span>
     <span className="relative">{children}</span>
-    <span aria-hidden="true" className="pointer-events-none absolute inset-0 text-[color:var(--paint-color)]" style={{ '--paint-color': revealColor, maskImage: mask || 'none', WebkitMaskImage: mask || 'none' } as CSSProperties}>{children}</span>
+    {background ? <span aria-hidden="true" className="pointer-events-none absolute inset-0 -z-10 rounded-[inherit] bg-[color:var(--paint-color)]" style={{ '--paint-color': revealColor, maskImage: mask || 'none', WebkitMaskImage: mask || 'none' } as CSSProperties} /> : <span aria-hidden="true" className="pointer-events-none absolute inset-0 text-[color:var(--paint-color)]" style={{ '--paint-color': revealColor, maskImage: mask || 'none', WebkitMaskImage: mask || 'none' } as CSSProperties}>{children}</span>}
   </span>
 }
