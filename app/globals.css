@@ -49,9 +49,8 @@ body { margin:0; background:var(--background); color:var(--foreground); font-fam
   .archive-toggle:hover { transform:translateX(3px); }
 }
 .paint-reveal { --paint-color:var(--accent); isolation:isolate; }
-.paint-reveal[data-background="true"] { padding-block:.2em; background:var(--panel); color:var(--foreground); }
-.paint-reveal[data-background="true"] > span:nth-child(2) { opacity:0; }
-.paint-reveal[data-background="true"] > span:last-child { z-index:1; border-radius:inherit; }
+.paint-reveal[data-background="true"] { padding:.45em .8em; background:var(--panel); color:var(--foreground); border:1px solid var(--line); border-radius:.25rem; overflow:hidden; }
+.paint-reveal[data-background="true"] > span:last-child { z-index:0; border-radius:inherit; }
 .paint-reveal > span:last-child { transition:opacity .25s ease; }
 @media (prefers-reduced-motion:reduce) { .paint-reveal > span:last-child { display:none; } }
 .reveal-section, .reveal-card, .team-entry { opacity:1; }
