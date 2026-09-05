@@ -53,9 +53,9 @@ export const workArchive = [
 ] as const
 
 export const team = [
-  { name: 'Team member', role: 'Natural Intellects', bio: 'Profile details will be added as the team information is published.' },
-  { name: 'Team member', role: 'Natural Intellects', bio: 'Profile details will be added as the team information is published.' },
-  { name: 'Team member', role: 'Natural Intellects', bio: 'Profile details will be added as the team information is published.' },
+ { name: 'Tukashaba Godwin', role: 'Chairman & MD', bio: 'Leads Natural Intellects with a practical technology vision, guiding the company’s direction, partnerships and long-term growth.' },
+ { name: 'Alton KIfamunyanja', role: 'Head Developer', bio: 'Shapes the technical direction of products and systems, turning ideas into reliable digital experiences.' },
+ { name: 'Kimwera Davis', role: 'Developer', bio: 'Builds and refines software experiences across the company’s products, services and experimental work.' },
 ]
 
 export const timeline = [

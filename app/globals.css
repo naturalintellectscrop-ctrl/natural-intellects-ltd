@@ -49,6 +49,9 @@ body { margin:0; background:var(--background); color:var(--foreground); font-fam
   .archive-toggle:hover { transform:translateX(3px); }
 }
 .paint-reveal { --paint-color:var(--accent); isolation:isolate; }
+.paint-heading { position:relative; isolation:isolate; transition:color .25s ease; }
+@media (prefers-reduced-motion:no-preference) { .paint-heading::after { content:""; position:absolute; z-index:-1; inset:0; pointer-events:none; opacity:0; background:radial-gradient(ellipse 120px 42px at var(--paint-x,50%) var(--paint-y,50%), color-mix(in srgb, var(--accent) 82%, transparent), transparent 72%); transition:opacity .25s ease; } .paint-heading:hover::after { opacity:.28; } }
+@media (prefers-reduced-motion:reduce) { .paint-heading::after { display:none; } }
 .paint-reveal[data-background="true"] { padding:.45em .8em; background:var(--panel); color:var(--foreground); border:1px solid var(--line); border-radius:.25rem; overflow:hidden; }
 .paint-reveal[data-background="true"] > span:last-child { z-index:0; border-radius:inherit; }
 .paint-reveal > span:last-child { transition:opacity .25s ease; }
