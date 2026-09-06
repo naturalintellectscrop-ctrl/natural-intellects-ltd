@@ -20,7 +20,7 @@ export function ProductsShowcase() {
   const [paused, setPaused] = useState(false)
   const resumeTimer = useRef<ReturnType<typeof setTimeout> | null>(null)
   const active = products[activeIndex]
-  const preview = useMemo(() => previewImages[active.slug] ?? '/ni-logo-updated.png', [active.slug])
+  const stackItems = useMemo(() => products.map((item, index) => ({ item, index, image: previewImages[item.slug] ?? '/ni-logo-updated.png', distance: (index - activeIndex + products.length) % products.length })).sort((a, b) => b.distance - a.distance), [activeIndex])
 
   const selectProduct = useCallback((index: number) => {
     setActiveIndex(index)
@@ -37,7 +37,7 @@ export function ProductsShowcase() {
     return () => clearInterval(timer)
   }, [paused])
 
-  return <section id="products" className="reveal-section border-y border-line bg-panel/30 px-6 py-24 lg:px-10 lg:py-32" onMouseEnter={() => setPaused(true)} onMouseLeave={() => setPaused(false)}>
+  return <section id="products" className="reveal-section border-y border-line bg-panel/30 px-6 py-24 lg:px-10 lg:py-32" onMouseEnter={() => setPaused(true)} onMouseLeave={() => setPaused(false)} onFocus={() => setPaused(true)} onBlur={() => setPaused(false)}>
     <div className="mx-auto max-w-screen-2xl">
       <div className="flex flex-col justify-between gap-6 lg:flex-row lg:items-end"><div><div className="eyebrow">03 / Products</div><h2 className="mt-6 max-w-3xl text-5xl tracking-[-.06em] lg:text-8xl">Technology being built for the real world.</h2></div><p className="max-w-xs text-sm leading-relaxed text-muted">Products and systems developed with practical intent, clear constraints and room to evolve.</p></div>
       <div className="mt-16 grid gap-12 lg:grid-cols-[.75fr_1.25fr] lg:gap-20">
@@ -46,12 +46,15 @@ export function ProductsShowcase() {
           <button type="button" onClick={() => setPaused((value) => !value)} className="flex items-center gap-2 py-4 font-mono text-[10px] uppercase tracking-widest text-muted hover:text-accent" aria-label={paused ? 'Resume product rotation' : 'Pause product rotation'}>{paused ? <Play className="size-3" /> : <Pause className="size-3" />}{paused ? 'Resume rotation' : 'Pause rotation'}</button>
         </div>
           <div id={`product-preview-${active.slug}`} role="tabpanel" aria-live="polite" className="min-w-0">
-            <div className="group relative isolate min-h-[26rem] overflow-hidden bg-background sm:min-h-[34rem]" key={active.slug}>
-              <div className="absolute inset-0 overflow-hidden opacity-45"><img src={preview} alt="" aria-hidden="true" className="absolute left-[58%] top-1/2 h-[82%] w-[82%] -translate-x-1/2 -translate-y-1/2 scale-125 object-contain blur-xl grayscale transition-all duration-700" /><img src={preview} alt="" aria-hidden="true" className="absolute left-[42%] top-1/2 h-[78%] w-[78%] -translate-x-1/2 -translate-y-1/2 scale-125 object-contain blur-2xl grayscale opacity-50 transition-all duration-700" /></div>
-              <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_62%_48%,transparent_8%,var(--background)_72%)]" />
-              <div className="absolute left-1/2 top-1/2 size-2 -translate-x-1/2 -translate-y-1/2 rounded-full bg-accent shadow-[0_0_24px_var(--accent)]" />
-              <div className="relative z-10 flex min-h-[26rem] items-center justify-center p-8 sm:min-h-[34rem] sm:p-12"><div className="w-[72%] overflow-hidden border border-line/80 bg-background/95 p-2 shadow-[0_24px_80px_rgba(0,0,0,.6)] transition-transform duration-700 group-hover:-translate-y-2 sm:w-[62%] sm:p-3"><div className="flex items-center gap-2 border-b border-line pb-2"><span className="size-1.5 rounded-full bg-accent" /><span className="size-1.5 rounded-full bg-line" /><span className="size-1.5 rounded-full bg-line" /><span className="ml-2 truncate font-mono text-[9px] uppercase tracking-widest text-muted">live / {active.slug}</span></div><div className="flex min-h-[14rem] items-center justify-center overflow-hidden bg-panel p-5 sm:min-h-[20rem] sm:p-8"><img src={preview} alt={`${active.name} product interface`} className="max-h-[18rem] max-w-full object-contain transition-transform duration-700 group-hover:scale-[1.03]" /></div></div></div>
-              <div className="absolute inset-x-0 bottom-0 z-20 flex items-end justify-between gap-4 bg-gradient-to-t from-background via-background/70 to-transparent px-6 pb-5 pt-20 sm:px-10 sm:pb-7"><div><div className="eyebrow">{String(activeIndex + 1).padStart(2, '0')} · {active.status}</div><h3 className="mt-2 text-2xl tracking-[-.04em] sm:text-3xl">{active.name}</h3></div><Link href={`/products/${active.slug}`} className="group/link inline-flex shrink-0 items-center gap-2 font-mono text-[10px] uppercase tracking-widest text-foreground hover:text-accent">Explore <ArrowUpRight className="size-4 transition-transform group-hover/link:-translate-y-1 group-hover/link:translate-x-1" /></Link></div>
+            <div className="group relative isolate min-h-[28rem] overflow-hidden bg-background sm:min-h-[36rem]">
+              <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,transparent_25%,var(--background)_78%)]" />
+              {stackItems.map(({ item, image, distance }) => {
+                const isActive = distance === 0
+                const visibleDistance = Math.min(distance, 3)
+                return <div key={item.slug} aria-hidden={!isActive} className="absolute inset-0 flex items-center justify-center transition-all duration-700 ease-out" style={{ zIndex: isActive ? 20 : 10 - visibleDistance, opacity: isActive ? 1 : visibleDistance === 1 ? .58 : visibleDistance === 2 ? .3 : .14, transform: `translate(${isActive ? 0 : visibleDistance % 2 ? -5 : 5}%, ${isActive ? 0 : visibleDistance * 3}px) scale(${isActive ? 1 : 1 - visibleDistance * .055}) rotate(${isActive ? 0 : visibleDistance % 2 ? -1.2 : 1.2}deg)`, filter: isActive ? 'none' : `blur(${visibleDistance * 1.5}px) grayscale(${visibleDistance * 18}%)` }}>
+                  <div className="relative w-[78%] overflow-hidden rounded-sm border border-line/80 bg-background/95 p-2 shadow-[0_24px_80px_rgba(0,0,0,.6)] sm:w-[64%] sm:p-3"><div className="flex items-center gap-2 border-b border-line pb-2"><span className="size-1.5 rounded-full bg-accent" /><span className="size-1.5 rounded-full bg-line" /><span className="size-1.5 rounded-full bg-line" /><span className="ml-2 truncate font-mono text-[9px] uppercase tracking-widest text-muted">live / {item.slug}</span></div><div className="flex min-h-[15rem] items-center justify-center overflow-hidden bg-panel p-5 sm:min-h-[22rem] sm:p-8"><img src={image} alt={isActive ? `${item.name} product interface` : ''} className="max-h-[20rem] max-w-full object-contain transition-transform duration-700 group-hover:scale-[1.02]" /></div>{isActive && <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-background via-background/90 to-transparent px-5 pb-4 pt-20 sm:px-7 sm:pb-6"><div className="eyebrow">{String(activeIndex + 1).padStart(2, '0')} · {active.status}</div><h3 className="mt-1 text-2xl tracking-[-.04em] sm:text-3xl">{active.name}</h3><p className="mt-1 max-w-md text-xs leading-relaxed text-muted sm:text-sm">{active.solution}</p><Link href={`/products/${active.slug}`} className="group/link mt-3 inline-flex items-center gap-2 font-mono text-[10px] uppercase tracking-widest text-foreground hover:text-accent">Explore {active.name} <ArrowUpRight className="size-4 transition-transform group-hover/link:-translate-y-1 group-hover/link:translate-x-1" /></Link></div>}</div>
+                </div>
+              })}
             </div>
         </div>
       </div>
