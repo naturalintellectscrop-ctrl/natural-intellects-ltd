@@ -12,6 +12,19 @@ export const foundationPrograms = [
 
 export const foundationValues = ['Curiosity with care', 'Progress people can feel', 'Shared knowledge over gatekeeping']
 
+export const foundationProjects = {
+  deepPress: {
+    name: 'Deep Press',
+    slug: 'deep-press',
+    status: 'Concept / R&D',
+    category: 'Human-centered technology',
+    shortDescription: 'A Foundation concept exploring how thoughtful digital experiences could help someone begin expressing difficult experiences, reflect, and consider an appropriate next step.',
+    route: '/foundation/deep-press',
+    relationship: 'Natural Intellects Foundation',
+    philosophy: 'One Life at a Time.',
+  },
+} as const
+
 export const foundationStats = [
   { value: '01', label: 'shared direction' },
   { value: '03', label: 'areas of focus' },
