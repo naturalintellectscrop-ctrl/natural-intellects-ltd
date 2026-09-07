@@ -18,7 +18,7 @@ export const foundationProjects = {
     slug: 'deep-press',
     status: 'Concept / R&D',
     category: 'Human-centered technology',
-    shortDescription: 'A Foundation concept exploring how thoughtful digital experiences could help someone begin expressing difficult experiences, reflect, and consider an appropriate next step.',
+    shortDescription: 'A Foundation initiative exploring how thoughtful technology could help someone experiencing depression or a difficult emotional period find somewhere to begin.',
     route: '/foundation/deep-press',
     relationship: 'Natural Intellects Foundation',
     philosophy: 'One Life at a Time.',
