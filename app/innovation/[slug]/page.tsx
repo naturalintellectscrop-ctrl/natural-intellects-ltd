@@ -1,0 +1,8 @@
+import Link from 'next/link'
+import { ArrowLeft, ArrowUpRight } from 'lucide-react'
+import { allSlugs, findInnovation } from '@/data/site'
+import { SiteNav, Status } from '@/components/site-chrome'
+import { notFound } from 'next/navigation'
+
+export function generateStaticParams() { return allSlugs().innovation.map((slug) => ({ slug })) }
+export default async function InnovationPage({ params }: { params: Promise<{ slug: string }> }) { const { slug } = await params; const p = findInnovation(slug); if (!p) notFound(); return <main><SiteNav /><article className="grid-lines mx-auto min-h-screen max-w-7xl px-6 pb-24 pt-40 lg:px-10 lg:pt-52"><Link href="/#innovation" className="font-mono text-xs uppercase tracking-widest text-muted hover:text-accent"><ArrowLeft className="mr-2 inline size-3" /> Back to innovation</Link><div className="mt-16 grid gap-14 lg:grid-cols-[.8fr_1.2fr]"><div><div className="eyebrow">NI Lab / Exploration</div><h1 className="mt-7 text-6xl tracking-[-.07em] lg:text-9xl">{p.name}</h1><div className="mt-8"><Status value={p.status} /></div></div><div className="max-w-2xl"><p className="font-mono text-xs uppercase tracking-widest text-accent">{p.category}</p><p className="mt-8 text-2xl leading-snug lg:text-4xl">{p.description}</p><p className="mt-10 max-w-lg leading-relaxed text-muted">This is part of the Natural Intellects innovation horizon. It is presented transparently as an exploration, not as a launched product.</p><Link href="/contact" className="mt-16 inline-flex items-center gap-3 border-b border-foreground/50 pb-3 hover:border-accent hover:text-accent">Start a conversation <ArrowUpRight className="size-4" /></Link></div></div></article></main> }
