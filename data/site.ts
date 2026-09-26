@@ -3,7 +3,7 @@ export type Status = 'ACTIVE' | 'IN DEVELOPMENT' | 'UPCOMING' | 'CONCEPT' | 'R&D
 export const contact = {
   whatsapp: 'https://wa.me/256752255676',
   email: 'naturalintellectsltd@gmail.com',
-  phones: ['+26752255676', '+256762449504'],
+  phones: ['+256752255676', '+256762449504'],
 }
 
 export const services = [
