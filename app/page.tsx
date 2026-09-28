@@ -2,11 +2,13 @@ import Link from 'next/link'
 import { ArrowRight, ArrowUpRight, Orbit } from 'lucide-react'
 import { audiences, buildLoop, buildSequence, capabilities, dimensions, innovation, niFacts, team, timeline } from '@/data/site'
 import { foundationFocus, foundationProjects } from '@/data/foundation'
+import { media } from '@/data/media'
 import { SiteNav, Status } from '@/components/site-chrome'
 import { WorkArchive } from '@/components/work-archive'
 import { ServicesSection } from '@/components/services-section'
 import { PaintRevealText } from '@/components/paint-reveal-text'
 import { ProductsShowcase } from '@/components/products-showcase'
+import { PhotoPlate } from '@/components/photo-plate'
 
 const Card = ({ href, number, title, description, status }: { href: string; number?: string; title: string; description: string; status?: string }) => <Link href={href} className="group reveal-card flex min-h-64 flex-col justify-between border border-line bg-panel p-6 hover:-translate-y-1 hover:border-accent sm:p-8"><div className="flex items-start justify-between gap-4"><span className="eyebrow">{number ?? 'NI'}</span>{status && <Status value={status} />}</div><div><h3 className="text-2xl tracking-tight group-hover:text-accent">{title}</h3><p className="mt-3 max-w-sm text-sm leading-relaxed text-muted">{description}</p><ArrowUpRight className="mt-7 size-5 text-muted group-hover:translate-x-1 group-hover:-translate-y-1 group-hover:text-accent" /></div></Link>
 
@@ -41,40 +43,51 @@ export default function Home() {
     </div>
   </section>
 
-  {/* 02 / WHAT NI DOES — capability taxonomy retained with clearer framing */}
+  {/* 02 / WHAT NI DOES — editorial ledger: four working lenses with the concrete work each one holds */}
   <section id="capabilities" className="reveal-section border-y border-line px-6 py-24 lg:px-10 lg:py-32">
-    <div className="mx-auto max-w-screen-2xl">
-      <div className="flex flex-col justify-between gap-6 lg:flex-row lg:items-end"><div><div className="eyebrow">02 / What NI does</div><h2 className="mt-6 max-w-3xl text-5xl tracking-[-.06em] lg:text-7xl">Four working lenses.</h2></div><p className="max-w-sm text-sm leading-relaxed text-muted">Every service NI offers, product NI builds and concept NI explores falls under one of these capabilities.</p></div>
-      <div className="mt-12 grid gap-px bg-line md:grid-cols-2 lg:grid-cols-4">{capabilities.map((item) => <Card key={item.slug} href={`/capabilities/${item.slug}`} number={item.number} title={item.title} description={item.description} />)}</div>
+    <div className="mx-auto grid max-w-screen-2xl gap-12 lg:grid-cols-[.72fr_1.28fr] lg:gap-16">
+      <div className="lg:sticky lg:top-28 lg:self-start">
+        <div className="eyebrow">02 / What NI does</div>
+        <h2 className="mt-6 text-5xl tracking-[-.06em] lg:text-6xl">Four working lenses.</h2>
+        <p className="mt-8 max-w-sm text-sm leading-relaxed text-muted">Every service NI offers, product NI builds and concept NI explores falls under one of these capabilities.</p>
+        <p className="mt-4 max-w-sm text-sm leading-relaxed text-muted">Not sure where your need sits? The <a href="#services" className="text-foreground underline decoration-line underline-offset-4 transition-colors hover:text-accent hover:decoration-accent">services index</a> maps each engagement onto its lens.</p>
+      </div>
+      <div className="ni-lens border-y border-line">
+        {capabilities.map((item) => <Link key={item.slug} href={`/capabilities/${item.slug}`} className="group grid grid-cols-[auto_1fr_auto] items-start gap-x-5 border-b border-line py-7 transition-colors last:border-0 hover:bg-panel sm:gap-x-10 sm:py-9"><span className="ghost-number font-mono text-4xl leading-none transition-colors sm:text-6xl" aria-hidden="true">{item.number}</span><div className="min-w-0"><h3 className="text-2xl tracking-tight transition-colors group-hover:text-accent sm:text-3xl">{item.title}</h3><p className="mt-2 max-w-lg text-sm leading-relaxed text-muted">{item.description}</p><p className="mt-4 font-mono text-[10px] uppercase tracking-[.18em] text-muted">{item.projects.length.toString().padStart(2, '0')} linked {item.projects.length > 1 ? 'projects' : 'project'} · {item.slug}</p></div><ArrowUpRight className="mt-2 size-5 shrink-0 text-muted transition-transform group-hover:translate-x-1 group-hover:-translate-y-1 group-hover:text-accent" /></Link>)}
+      </div>
     </div>
   </section>
 
   <ProductsShowcase />
 
-  {/* 04 / WHO NI BUILDS FOR */}
+  {/* 04 / WHO NI BUILDS FOR — image-led: the real-world contexts, then the audiences */}
   <section id="built-for" className="reveal-section mx-auto max-w-screen-2xl px-6 py-24 lg:px-10 lg:py-28">
     <div className="flex flex-col justify-between gap-6 lg:flex-row lg:items-end"><div><div className="eyebrow">04 / Who NI builds for</div><h2 className="mt-6 max-w-3xl text-4xl tracking-[-.05em] lg:text-6xl">Built for people doing real work.</h2></div><p className="max-w-sm text-sm leading-relaxed text-muted">The same practical intent, applied at different scales — from a single business to a national institution.</p></div>
-    <div className="mt-12 grid gap-px border border-line bg-line sm:grid-cols-2 lg:grid-cols-4">{audiences.map((item) => <div key={item.number} className="reveal-card bg-background p-6 sm:p-7"><div className="flex items-center justify-between"><span className="font-mono text-xs text-accent">{item.number}</span></div><h3 className="mt-5 text-xl tracking-tight">{item.title}</h3><p className="mt-3 text-sm leading-relaxed text-muted">{item.description}</p></div>)}</div>
+    <PhotoPlate media={media.builtFor} className="mt-12" photoClassName="h-[280px] sm:h-[400px] lg:h-[480px]" sizes="(max-width:1536px) 100vw, 1440px" />
+    <div className="mt-4 grid gap-px border border-line bg-line sm:grid-cols-2 lg:grid-cols-4">{audiences.map((item) => <div key={item.number} className="reveal-card bg-background p-6 sm:p-7"><div className="flex items-center justify-between"><span className="font-mono text-xs text-accent">{item.number}</span></div><h3 className="mt-5 text-xl tracking-tight">{item.title}</h3><p className="mt-3 text-sm leading-relaxed text-muted">{item.description}</p></div>)}</div>
   </section>
 
   {/* 05 / EVIDENCE — real work, moved up the journey */}
   <WorkArchive eyebrow="05 / Evidence" />
 
-  {/* 06 / HOW NI BUILDS — verified working sequence from NI's engineering documentation */}
+  {/* 06 / HOW NI BUILDS — verified working sequence from NI's engineering documentation, paired with engineering evidence */}
   <section id="how" className="reveal-section border-y border-line px-6 py-24 lg:px-10 lg:py-32">
-    <div className="mx-auto grid max-w-screen-2xl gap-14 lg:grid-cols-[.85fr_1.15fr]">
+    <div className="mx-auto grid max-w-screen-2xl gap-14 lg:grid-cols-2 lg:gap-16">
       <div>
         <div className="eyebrow">06 / How NI builds</div>
         <h2 className="mt-6 max-w-md text-4xl leading-tight tracking-[-.05em] lg:text-6xl">Systems first. Interfaces follow.</h2>
         <p className="mt-8 max-w-md leading-relaxed text-muted">NI treats software as engineering, not decoration. Work is documented as an explicit sequence, and progress is measured against the system — not the screenshot.</p>
         <p className="mt-6 border-l-2 border-accent pl-5 text-lg leading-snug text-foreground/80">A finished interface is not the same thing as a finished system.</p>
+        <div className="mt-12 max-w-lg">
+          <div className="font-mono text-[10px] uppercase tracking-[.18em] text-muted">The working sequence</div>
+          <div className="mt-5 flex flex-wrap items-center gap-x-2 gap-y-3">{buildSequence.map((step, i) => <span key={step} className="flex items-center gap-2"><span className={`border px-3 py-2 font-mono text-xs uppercase tracking-widest ${i === 0 || i === buildSequence.length - 1 ? 'border-accent text-accent' : 'border-line text-foreground'}`}>{step}</span>{i < buildSequence.length - 1 && <ArrowRight className="size-3 text-muted" aria-hidden="true" />}</span>)}</div>
+        </div>
       </div>
-      <div className="max-w-2xl">
-        <div className="font-mono text-[10px] uppercase tracking-[.18em] text-muted">The working sequence</div>
-        <div className="mt-5 flex flex-wrap items-center gap-x-2 gap-y-3">{buildSequence.map((step, i) => <span key={step} className="flex items-center gap-2"><span className={`border px-3 py-2 font-mono text-xs uppercase tracking-widest ${i === 0 || i === buildSequence.length - 1 ? 'border-accent text-accent' : 'border-line text-foreground'}`}>{step}</span>{i < buildSequence.length - 1 && <ArrowRight className="size-3 text-muted" aria-hidden="true" />}</span>)}</div>
-        <div className="mt-12 border-t border-line pt-8">
+      <div className="max-w-xl">
+        <PhotoPlate media={media.engineering} photoClassName="h-[260px] sm:h-[340px] lg:h-[400px]" sizes="(max-width:1024px) 100vw, 45vw" />
+        <div className="mt-8">
           <div className="font-mono text-[10px] uppercase tracking-[.18em] text-muted">The practical loop</div>
-          <div className="mt-5 grid gap-4 sm:grid-cols-5">{buildLoop.map((step, i) => <div key={step} className="border-t border-line pt-3"><span className="font-mono text-xs text-accent">0{i + 1}</span><div className="mt-2 text-sm">{step}</div></div>)}</div>
+          <div className="mt-5 grid gap-4 grid-cols-2 sm:grid-cols-5">{buildLoop.map((step, i) => <div key={step} className="border-t border-line pt-3"><span className="font-mono text-xs text-accent">0{i + 1}</span><div className="mt-2 text-sm">{step}</div></div>)}</div>
         </div>
       </div>
     </div>
@@ -93,15 +106,16 @@ export default function Home() {
     </div>
   </section>
 
-  {/* 09 / FOUNDATION — the social-impact arm, visually distinct, never sold */}
+  {/* 09 / FOUNDATION — the social-impact arm, visually distinct, image-led, never sold */}
   <section id="foundation" className="reveal-section relative overflow-hidden border-y border-line bg-[var(--foundation-background)] px-6 py-24 text-[var(--foundation-text)] lg:px-10 lg:py-32">
     <div className="mx-auto max-w-screen-2xl">
-      <div className="flex flex-col justify-between gap-8 lg:flex-row lg:items-end">
-        <div>
+      <div className="grid gap-10 lg:grid-cols-[1.05fr_.95fr] lg:items-center lg:gap-16">
+        <PhotoPlate media={media.foundation} variant="foundation" className="order-2 lg:order-1" photoClassName="h-[280px] sm:h-[360px] lg:h-[430px]" sizes="(max-width:1024px) 100vw, 50vw" />
+        <div className="order-1 lg:order-2">
           <div className="font-mono text-[10px] uppercase tracking-[.24em] text-[var(--foundation-orange)]">09 / Natural Intellects Foundation · One Life at a Time.</div>
           <h2 className="mt-6 max-w-3xl text-5xl leading-[.95] tracking-[-.06em] lg:text-7xl">Technology in service of people.</h2>
+          <p className="mt-8 max-w-md text-sm leading-relaxed text-[var(--foundation-muted)]">The Foundation is NI&apos;s social-impact arm — separate from commercial work. It focuses on people, access, learning and opportunity: making sure technology reaches the people who need it, one life at a time.</p>
         </div>
-        <p className="max-w-sm text-sm leading-relaxed text-[var(--foundation-muted)]">The Foundation is NI&apos;s social-impact arm — separate from commercial work. It focuses on people, access, learning and opportunity.</p>
       </div>
       <div className="mt-12 grid gap-4 md:grid-cols-3">{foundationFocus.map((item) => <div key={item.number} className="reveal-card border border-[var(--foundation-text)]/15 bg-[var(--foundation-surface)] p-6 sm:p-8"><span className="font-mono text-xs text-[var(--foundation-orange)]">{item.number}</span><h3 className="mt-5 text-xl tracking-tight sm:text-2xl">{item.title}</h3><p className="mt-3 text-sm leading-relaxed text-[var(--foundation-muted)]">{item.description}</p></div>)}</div>
       <div className="mt-4 grid gap-4 lg:grid-cols-[1.4fr_1fr]">

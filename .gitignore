@@ -15,3 +15,4 @@ next-env.d.ts
 
 # local package manager locks (repo uses package-lock.json)
 bun.lock
+tsconfig.tsbuildinfo
