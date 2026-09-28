@@ -22,15 +22,33 @@ function monogram(name: string) {
   return name.split(/\s+/).map((word) => word[0]).join('').slice(0, 3).toUpperCase()
 }
 
+type Product = (typeof products)[number]
+
+// The physical "page" of the book. Rendered identically on the stack and inside
+// the turning overlay so the swap between them is pixel-perfect.
+function ProductCardFace({ item, index, image, isActive }: { item: Product; index: number; image?: string; isActive: boolean }) {
+  return <div className="relative w-full overflow-hidden rounded-sm border border-line/80 bg-background/95 p-2 shadow-[0_24px_80px_rgba(0,0,0,.6)] sm:p-3">
+    <div className="flex items-center gap-2 border-b border-line pb-2"><span className={`size-1.5 rounded-full ${item.status === 'ACTIVE' ? 'bg-accent' : 'bg-line'}`} /><span className="size-1.5 rounded-full bg-line" /><span className="size-1.5 rounded-full bg-line" /><span className="ml-2 truncate font-mono text-[9px] uppercase tracking-widest text-muted">{item.slug} / {item.status}</span></div>
+    {image ? (
+      <div className="flex min-h-[15rem] items-center justify-center overflow-hidden bg-panel p-5 sm:min-h-[22rem] sm:p-8"><img src={image} alt={isActive ? `${item.name} product visual` : ''} className="max-h-[20rem] max-w-full object-contain" /></div>
+    ) : (
+      <div className="grid-lines flex min-h-[15rem] flex-col items-start justify-between bg-panel p-5 sm:min-h-[22rem] sm:p-8"><span className="eyebrow">NI system sheet</span><div className="font-mono text-6xl tracking-tight text-accent sm:text-8xl">{monogram(item.name)}</div><p className="font-mono text-[9px] uppercase tracking-[.18em] text-muted">Interface preview not published · {item.category}</p></div>
+    )}
+    <div className={`absolute inset-x-0 bottom-0 bg-gradient-to-t from-background via-background/90 to-transparent px-5 pb-4 pt-20 transition-opacity duration-500 sm:px-7 sm:pb-6 ${isActive ? 'opacity-100' : 'pointer-events-none opacity-0'}`}><div className="eyebrow">{String(index + 1).padStart(2, '0')} · {item.status}</div><h3 className="mt-1 text-2xl tracking-[-.04em] sm:text-3xl">{item.name}</h3><p className="mt-1 max-w-md text-xs leading-relaxed text-muted sm:text-sm">{item.solution}</p><Link tabIndex={isActive ? 0 : -1} href={'url' in item && item.url ? item.url : `/products/${item.slug}`} target={'url' in item && item.url ? '_blank' : undefined} rel={'url' in item && item.url ? 'noreferrer' : undefined} className="group/link mt-3 inline-flex items-center gap-2 font-mono text-[10px] uppercase tracking-widest text-foreground hover:text-accent">Explore {item.name} <ArrowUpRight className="size-4 transition-transform group-hover/link:-translate-y-1 group-hover/link:translate-x-1" /></Link></div>
+  </div>
+}
+
 export function ProductsShowcase() {
   const [activeIndex, setActiveIndex] = useState(0)
   const [paused, setPaused] = useState(false)
-  // Book-cover flip: dir 1 opens the current cover around its left (binding)
-  // edge to reveal the next card beneath; dir -1 swings the previous cover
-  // shut again on top of the stack. Cleared after the turn completes.
-  const [flip, setFlip] = useState<{ dir: 1 | -1; from: number } | null>(null)
+  // Book page-turn: while a turn runs, a dedicated overlay page swings on the
+  // left binding edge — forward it lifts off (0 -> -90deg, vanishing edge-on at
+  // exactly -90deg so no opacity hack is needed); backward it swings shut onto
+  // the deck (-90 -> 0deg) and unmounts seamlessly over the identical active card.
+  const [flip, setFlip] = useState<{ dir: 1 | -1; page: number; nonce: number } | null>(null)
   const resumeTimer = useRef<ReturnType<typeof setTimeout> | null>(null)
   const flipTimer = useRef<ReturnType<typeof setTimeout> | null>(null)
+  const flipNonce = useRef(0)
   const activeRef = useRef(0)
   const active = products[activeIndex]
   const reducedMotion = useSyncExternalStore(
@@ -47,7 +65,7 @@ export function ProductsShowcase() {
     activeRef.current = index
     setActiveIndex(index)
     if (!reducedMotion) {
-      setFlip({ dir: forward ? 1 : -1, from: current })
+      setFlip({ dir: forward ? 1 : -1, page: forward ? current : index, nonce: ++flipNonce.current })
       if (flipTimer.current) clearTimeout(flipTimer.current)
       flipTimer.current = setTimeout(() => setFlip(null), 1050)
     }
@@ -80,20 +98,22 @@ export function ProductsShowcase() {
               {stackItems.map(({ item, index, image, distance }) => {
                 const isActive = distance === 0
                 const visibleDistance = Math.min(distance, 3)
-                const isOpeningCover = flip?.dir === 1 && index === flip.from
-                const isClosingCover = flip?.dir === -1 && isActive
-                return <div key={item.slug} aria-hidden={!isActive} className={`absolute inset-0 flex items-center justify-center ${reducedMotion ? 'transition-opacity duration-200' : 'transition-[transform,opacity,filter] duration-[800ms] ease-[cubic-bezier(.22,.8,.24,1)] will-change-[transform,opacity,filter]'}`} style={{ zIndex: isOpeningCover || isClosingCover ? 30 : isActive ? 20 : 10 - visibleDistance, opacity: isOpeningCover ? 0 : isActive ? 1 : visibleDistance === 1 ? .58 : visibleDistance === 2 ? .3 : .14, transform: `translate(${isActive ? 0 : visibleDistance % 2 ? -5 : 5}%, ${isActive ? 0 : visibleDistance * 3}px) scale(${isActive ? 1 : 1 - visibleDistance * .055}) rotate(${isActive ? 0 : visibleDistance % 2 ? -1.2 : 1.2}deg)`, filter: isActive ? 'none' : `blur(${visibleDistance * 1.5}px) grayscale(${visibleDistance * 18}%)`, transformOrigin: isActive ? 'center center' : `${visibleDistance % 2 ? '42%' : '58%'} center`, transitionDelay: isOpeningCover || isClosingCover ? '0ms' : reducedMotion ? '0ms' : `${Math.max(0, 3 - visibleDistance) * 35}ms`, transitionDuration: isOpeningCover || isClosingCover ? '320ms' : undefined, pointerEvents: isOpeningCover ? 'none' : undefined }}>
-                  <div className={`relative w-[78%] transform-gpu overflow-hidden rounded-sm border border-line/80 bg-background/95 p-2 shadow-[0_24px_80px_rgba(0,0,0,.6)] transition-transform duration-700 ease-out sm:w-[64%] sm:p-3 ${isOpeningCover ? 'ni-page-open' : ''} ${isClosingCover ? 'ni-page-close' : ''}`}>
-                    <div className="flex items-center gap-2 border-b border-line pb-2"><span className={`size-1.5 rounded-full ${item.status === 'ACTIVE' ? 'bg-accent' : 'bg-line'}`} /><span className="size-1.5 rounded-full bg-line" /><span className="size-1.5 rounded-full bg-line" /><span className="ml-2 truncate font-mono text-[9px] uppercase tracking-widest text-muted">{item.slug} / {item.status}</span></div>
-                    {image ? (
-                      <div className="flex min-h-[15rem] items-center justify-center overflow-hidden bg-panel p-5 sm:min-h-[22rem] sm:p-8"><img src={image} alt={isActive ? `${item.name} product visual` : ''} className="max-h-[20rem] max-w-full object-contain transition-transform duration-700 group-hover:scale-[1.02]" /></div>
-                    ) : (
-                      <div className="grid-lines flex min-h-[15rem] flex-col items-start justify-between bg-panel p-5 sm:min-h-[22rem] sm:p-8"><span className="eyebrow">NI system sheet</span><div className="font-mono text-6xl tracking-tight text-accent sm:text-8xl">{monogram(item.name)}</div><p className="font-mono text-[9px] uppercase tracking-[.18em] text-muted">Interface preview not published · {item.category}</p></div>
-                    )}
-                    <div className={`absolute inset-x-0 bottom-0 bg-gradient-to-t from-background via-background/90 to-transparent px-5 pb-4 pt-20 transition-opacity duration-500 sm:px-7 sm:pb-6 ${isActive ? 'opacity-100' : 'pointer-events-none opacity-0'}`}><div className="eyebrow">{String(index + 1).padStart(2, '0')} · {item.status}</div><h3 className="mt-1 text-2xl tracking-[-.04em] sm:text-3xl">{item.name}</h3><p className="mt-1 max-w-md text-xs leading-relaxed text-muted sm:text-sm">{item.solution}</p><Link tabIndex={isActive ? 0 : -1} href={'url' in item && item.url ? item.url : `/products/${item.slug}`} target={'url' in item && item.url ? '_blank' : undefined} rel={'url' in item && item.url ? 'noreferrer' : undefined} className="group/link mt-3 inline-flex items-center gap-2 font-mono text-[10px] uppercase tracking-widest text-foreground hover:text-accent">Explore {item.name} <ArrowUpRight className="size-4 transition-transform group-hover/link:-translate-y-1 group-hover/link:translate-x-1" /></Link></div>
-                  </div>
+                return <div key={item.slug} aria-hidden={!isActive} className={`absolute inset-0 flex items-center justify-center ${reducedMotion ? 'transition-opacity duration-200' : 'transition-[transform,opacity,filter] duration-[800ms] ease-[cubic-bezier(.22,.8,.24,1)] will-change-[transform,opacity,filter]'}`} style={{ zIndex: isActive ? 20 : 10 - visibleDistance, opacity: isActive ? 1 : visibleDistance === 1 ? .58 : visibleDistance === 2 ? .3 : .14, transform: `translate(${isActive ? 0 : visibleDistance % 2 ? -5 : 5}%, ${isActive ? 0 : visibleDistance * 3}px) scale(${isActive ? 1 : 1 - visibleDistance * .055}) rotate(${isActive ? 0 : visibleDistance % 2 ? -1.2 : 1.2}deg)`, filter: isActive ? 'none' : `blur(${visibleDistance * 1.5}px) grayscale(${visibleDistance * 18}%)`, transformOrigin: isActive ? 'center center' : `${visibleDistance % 2 ? '42%' : '58%'} center`, transitionDelay: reducedMotion ? '0ms' : `${Math.max(0, 3 - visibleDistance) * 35}ms`, pointerEvents: isActive ? undefined : 'none' }}>
+                  <div className="w-[78%] sm:w-[64%]"><ProductCardFace item={item} index={index} image={image} isActive={isActive} /></div>
                 </div>
               })}
+              {flip && (() => {
+                const item = products[flip.page]
+                const image = productVisuals[item.slug]
+                return <div key={`turn-${flip.nonce}`} aria-hidden="true" className="pointer-events-none absolute inset-0 z-40" style={{ perspective: '1800px' }}>
+                  <div className="absolute inset-0 flex items-center justify-center">
+                    <div className={`relative w-[78%] transform-gpu will-change-transform sm:w-[64%] ${flip.dir === 1 ? 'ni-page-open' : 'ni-page-close'}`}>
+                      <ProductCardFace item={item} index={flip.page} image={image} isActive />
+                      <div className={`ni-page-shade ${flip.dir === 1 ? 'ni-page-shade--open' : 'ni-page-shade--close'}`} />
+                    </div>
+                  </div>
+                </div>
+              })()}
             </div>
         </div>
       </div>

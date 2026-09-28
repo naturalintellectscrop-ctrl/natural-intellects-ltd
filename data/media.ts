@@ -1,9 +1,10 @@
 // Central media registry.
 //
-// Photography here is TEMPORARY editorial imagery (contextually chosen, watermarked-
-// source rejected). To swap in approved NI assets later: replace the file in
-// /public/photography/ (same name) or point `src` at a new path. Sections read
-// these slots only — no section redesign required.
+// Photography here is TEMPORARY editorial imagery. Current set: brand-free
+// compositions featuring Black African technologists and contexts (per client
+// direction), held in /public/photography/. To swap in approved NI assets
+// later: replace the file (same name) or point `src` at a new path. Sections
+// read these slots only — no section redesign required.
 //
 // Rules preserved from the design brief:
 // - Team members NEVER get photographs (typographic treatment only).
@@ -25,21 +26,21 @@ export type MediaSlot = {
 export const media = {
   /** 04 / Who NI builds for — real work context */
   builtFor: {
-    src: '/photography/team-table.jpg',
-    alt: 'A team gathered around a table, working through a problem together with laptops and notes',
+    src: '/photography/team-table.jpg?v=2',
+    alt: 'A young Black African product team gathered around a laptop, working through a problem together in a bright office',
     caption: 'Real work — the operational contexts NI builds for',
     label: 'IMG/01 · Context',
-    width: 2000,
-    height: 1500,
+    width: 1344,
+    height: 768,
   },
   /** 06 / How NI builds — engineering reality */
   engineering: {
-    src: '/photography/engineering-bench.jpg',
-    alt: 'An engineer testing hardware on a workbench with an oscilloscope, power supplies and wiring',
+    src: '/photography/engineering-bench.jpg?v=2',
+    alt: 'A Black African electronics engineer soldering and testing a circuit board at a workbench, laptop with code nearby',
     caption: 'Systems verified at the bench — engineering before interface',
     label: 'IMG/02 · Engineering',
-    width: 1611,
-    height: 1074,
+    width: 1344,
+    height: 768,
   },
   /** 07 / Services — technology in use */
   inUse: {

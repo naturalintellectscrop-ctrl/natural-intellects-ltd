@@ -141,11 +141,20 @@ body { margin:0; background:var(--background); color:var(--foreground); font-fam
 @keyframes mobile-archive-in { from { opacity:0; transform:translateY(20px); } to { opacity:1; transform:none; } }
 
 
-/* Products showcase: book-cover page-turn. Forward opens the active card
-around its binding (left) edge to reveal the card beneath; backward swings
-the previous cover shut again. Disabled under prefers-reduced-motion. */
-@keyframes ni-page-open { from { transform: perspective(1600px) rotateY(0deg); } to { transform: perspective(1600px) rotateY(-155deg); } }
-@keyframes ni-page-close { from { transform: perspective(1600px) rotateY(-155deg); } to { transform: perspective(1600px) rotateY(0deg); } }
-.ni-page-open { animation: ni-page-open .72s cubic-bezier(.55,.06,.35,1) both; transform-origin: left center; }
-.ni-page-close { animation: ni-page-close .78s cubic-bezier(.6,.05,.3,1) both; transform-origin: left center; }
-@media (prefers-reduced-motion: reduce) { .ni-page-open, .ni-page-close { animation: none; } }
+/* Products showcase: book-cover page-turn. A dedicated overlay page swings on
+the left binding edge with real perspective depth. Forward lifts the current
+cover off (0 -> -90deg: it vanishes edge-on at exactly -90deg, so no opacity
+animation is needed and 3D is never flattened). Backward swings the incoming
+cover shut onto the deck (-90 -> 0deg) and unmounts pixel-perfect over the
+active card. A travelling shade sells the light leaving/returning to the page.
+Disabled under prefers-reduced-motion. */
+@keyframes ni-page-open { from { transform: rotateY(0deg); } to { transform: rotateY(-90.5deg); } }
+@keyframes ni-page-close { from { transform: rotateY(-90.5deg); } to { transform: rotateY(0deg); } }
+.ni-page-open { animation: ni-page-open .68s cubic-bezier(.55,.08,.4,1) both; transform-origin: left center; }
+.ni-page-close { animation: ni-page-close .72s cubic-bezier(.25,.6,.3,1) both; transform-origin: left center; }
+.ni-page-shade { position: absolute; inset: 0; pointer-events: none; opacity: 0; background: linear-gradient(100deg, rgba(0,0,0,.78) 0%, rgba(0,0,0,.22) 46%, rgba(0,0,0,.62) 100%); }
+@keyframes ni-shade-open { from { opacity: 0; } to { opacity: .85; } }
+@keyframes ni-shade-close { from { opacity: .85; } to { opacity: 0; } }
+.ni-page-shade--open { animation: ni-shade-open .68s cubic-bezier(.55,.08,.4,1) both; }
+.ni-page-shade--close { animation: ni-shade-close .72s cubic-bezier(.25,.6,.3,1) both; }
+@media (prefers-reduced-motion: reduce) { .ni-page-open, .ni-page-close, .ni-page-shade--open, .ni-page-shade--close { animation: none; } }
