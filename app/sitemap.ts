@@ -1,5 +1,6 @@
 import type { MetadataRoute } from 'next'
 import { allSlugs } from '@/data/site'
+import { docSections } from '@/data/docs'
 
 const siteUrl = 'https://naturalintellects.com'
 
@@ -16,5 +17,6 @@ export default function sitemap(): MetadataRoute.Sitemap {
     ...products.map((slug) => ({ url: `${siteUrl}/products/${slug}`, lastModified: now, changeFrequency: 'monthly' as const, priority: 0.8 })),
     ...capabilities.map((slug) => ({ url: `${siteUrl}/capabilities/${slug}`, lastModified: now, changeFrequency: 'monthly' as const, priority: 0.7 })),
     ...innovation.map((slug) => ({ url: `${siteUrl}/innovation/${slug}`, lastModified: now, changeFrequency: 'yearly' as const, priority: 0.5 })),
+    ...docSections.map((doc) => ({ url: `${siteUrl}/docs/${doc.slug}`, lastModified: now, changeFrequency: 'monthly' as const, priority: 0.4 })),
   ]
 }

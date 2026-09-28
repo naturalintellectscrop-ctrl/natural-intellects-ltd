@@ -124,3 +124,12 @@ body { margin:0; background:var(--background); color:var(--foreground); font-fam
 @keyframes mobile-section-in { from { opacity:0; transform:translateY(24px); } to { opacity:1; transform:none; } }
 @keyframes mobile-archive-in { from { opacity:0; transform:translateY(20px); } to { opacity:1; transform:none; } }
 
+
+/* Products showcase: book-cover page-turn. Forward opens the active card
+around its binding (left) edge to reveal the card beneath; backward swings
+the previous cover shut again. Disabled under prefers-reduced-motion. */
+@keyframes ni-page-open { from { transform: perspective(1600px) rotateY(0deg); } to { transform: perspective(1600px) rotateY(-155deg); } }
+@keyframes ni-page-close { from { transform: perspective(1600px) rotateY(-155deg); } to { transform: perspective(1600px) rotateY(0deg); } }
+.ni-page-open { animation: ni-page-open .72s cubic-bezier(.55,.06,.35,1) both; transform-origin: left center; }
+.ni-page-close { animation: ni-page-close .78s cubic-bezier(.6,.05,.3,1) both; transform-origin: left center; }
+@media (prefers-reduced-motion: reduce) { .ni-page-open, .ni-page-close { animation: none; } }
