@@ -1,0 +1,17 @@
+# dependencies
+/node_modules
+
+# next.js build output
+/.next
+/out
+next-env.d.ts
+
+# local env
+.env*
+
+# misc
+*.log
+.DS_Store
+
+# local package manager locks (repo uses package-lock.json)
+bun.lock

@@ -3,8 +3,36 @@ export type Status = 'ACTIVE' | 'IN DEVELOPMENT' | 'UPCOMING' | 'CONCEPT' | 'R&D
 export const contact = {
   whatsapp: 'https://wa.me/256752255676',
   email: 'naturalintellectsltd@gmail.com',
-  phones: ['+26752255676', '+256762449504'],
+  phones: ['+256752255676', '+256762449504'],
 }
+
+// Company facts verified against the NI documentation record (est. 2023, registered 2026).
+export const niFacts = [
+  { label: 'Based in', value: 'Uganda' },
+  { label: 'Building since', value: '2023' },
+  { label: 'Registered', value: '2026' },
+  { label: 'Working across', value: 'Products / Systems / R&D' },
+] as const
+
+// The four interconnected dimensions of NI's work, as defined in the company record.
+export const dimensions = [
+  { number: '01', title: 'Commercial services', description: 'Technology work that businesses and institutions can engage NI to perform.', href: '/services', meta: 'Engage NI' },
+  { number: '02', title: 'Products & systems', description: 'Digital products, business systems and software platforms NI builds and develops.', href: '/#products', meta: 'What NI builds' },
+  { number: '03', title: 'Technology exploration', description: 'Concepts, experiments and R&D directions NI explores ahead of the market.', href: '/#innovation', meta: 'NI Lab' },
+  { number: '04', title: 'Natural Intellects Foundation', description: 'The social-impact arm. Separate from commercial work. One Life at a Time.', href: '/foundation', meta: 'Social impact' },
+] as const
+
+// Audiences drawn from the existing services record and company mission.
+export const audiences = [
+  { number: 'A', title: 'Businesses', description: 'Websites, visual identity support and digital operations for running a business online.' },
+  { number: 'B', title: 'Schools & offices', description: 'Management, reporting and information systems for schools, offices and institutions.' },
+  { number: 'C', title: 'Organizations', description: 'Operational clarity: structured systems for how work moves and gets reported.' },
+  { number: 'D', title: 'Individuals', description: 'Applications and tools built around specific needs, with room to evolve.' },
+] as const
+
+// Verified working sequence from NI's engineering documentation.
+export const buildSequence = ['Problem', 'Users', 'Process', 'System', 'Technology', 'Deployment', 'Iteration'] as const
+export const buildLoop = ['Understand', 'Design', 'Engineer', 'Validate', 'Evolve'] as const
 
 export const services = [
   { number: '01', title: 'Website Development & Maintenance', description: 'Modern, responsive and secure websites that keep businesses running online.', capability: 'Digital Products' },
@@ -44,12 +72,12 @@ export const workArchive = [
   { name: 'ACA', logo: '/work-done/aca.png', width: 93, height: 56 },
   { name: 'Aicher IT', logo: '/work-done/aicherit.png', width: 225, height: 76 },
   { name: 'Daily Sports', logo: '/work-done/dailsports.png', width: 238, height: 65 },
-  { name: 'IPD', logo: '/work-done/ipd.png', width: 513, height: 486 },
+  { name: 'IPD', logo: '/work-done/ni/ipd.png', width: 513, height: 486 },
   { name: 'Sorriso Hostesses', logo: '/work-done/sorrisohostesses.png', width: 279, height: 46 },
   { name: 'UFMI', logo: '/work-done/ufmi.png', width: 91, height: 66 },
   { name: 'WUFPA', logo: '/work-done/wufpa.png', width: 70, height: 57 },
-  { name: 'Smart Ride', logo: '/work-done/smart-ride.png', width: 1254, height: 1254 },
-  { name: 'House For Rent', logo: '/work-done/house-for-rent.png', width: 774, height: 768 },
+  { name: 'Smart Ride', logo: '/work-done/smart-ride-og.png', width: 1200, height: 630 },
+  { name: 'House For Rent', logo: '/work-done/ni/house-for-rent.png', width: 774, height: 768 },
 ] as const
 
 export const team = [
@@ -65,6 +93,7 @@ export const timeline = [
   ['2026+', 'PRODUCT DEVELOPMENT', 'Focus expands around practical digital products and platforms including Smart Ride, NISMS, House For Rent and upcoming DISMs.'],
 ] as const
 
+export function findStatus(slug: string) { return products.find((p) => p.slug === slug)?.status }
 export function findProject(slug: string) { return products.find((p) => p.slug === slug) }
 export function findInnovation(slug: string) { return innovation.find((p) => p.slug === slug) }
 export function findCapability(slug: string) { return capabilities.find((p) => p.slug === slug) }

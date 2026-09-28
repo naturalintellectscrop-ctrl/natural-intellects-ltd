@@ -5,7 +5,7 @@ import { Pause, Play } from 'lucide-react'
 import { useRef, useState } from 'react'
 import { workArchive } from '@/data/site'
 
-export function WorkArchive() {
+export function WorkArchive({ eyebrow = 'Selected work / archive' }: { eyebrow?: string }) {
   const [paused, setPaused] = useState(false)
   const [dragging, setDragging] = useState(false)
   const trackRef = useRef<HTMLDivElement>(null)
@@ -31,7 +31,7 @@ export function WorkArchive() {
     <section id="work" className="reveal-section overflow-hidden border-y border-line py-24 lg:py-32" aria-labelledby="work-heading">
       <div className="mx-auto max-w-screen-2xl px-6 lg:px-10">
         <div className="flex flex-col gap-6 border-b border-line pb-8 sm:flex-row sm:items-end sm:justify-between">
-          <div><div className="eyebrow">Selected work / archive</div><h2 id="work-heading" className="mt-5 text-4xl tracking-[-.04em] lg:text-6xl">Work that leaves a trace.</h2></div>
+          <div><div className="eyebrow">{eyebrow}</div><h2 id="work-heading" className="mt-5 text-4xl tracking-[-.04em] lg:text-6xl">Work that leaves a trace.</h2></div>
           <div className="flex items-end gap-6"><p className="max-w-xs text-sm leading-relaxed text-muted">A visual index of supplied work materials. No external destinations implied.</p><button type="button" onClick={() => setPaused((value) => !value)} className="archive-toggle flex shrink-0 items-center gap-2 font-mono text-[10px] uppercase tracking-widest text-muted hover:text-accent" aria-label={paused ? 'Resume archive movement' : 'Pause archive movement'}>{paused ? <Play aria-hidden="true" /> : <Pause aria-hidden="true" />}{paused ? 'Resume' : 'Pause'}</button></div>
         </div>
       </div>
