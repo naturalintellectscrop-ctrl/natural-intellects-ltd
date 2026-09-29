@@ -44,20 +44,20 @@ export const media = {
   },
   /** 07 / Services — technology in use */
   inUse: {
-    src: '/photography/technology-in-use.jpg',
-    alt: 'A business owner using a tablet at his workplace',
+    src: '/photography/technology-in-use.jpg?v=2',
+    alt: 'A Black African shop owner using a tablet at the counter of his shop, shelves of goods behind him',
     caption: 'Technology in use — where delivered systems meet daily work',
     label: 'IMG/03 · In use',
-    width: 1499,
-    height: 1001,
+    width: 1344,
+    height: 768,
   },
   /** 09 / Foundation — access, learning, opportunity */
   foundation: {
-    src: '/photography/foundation-access.jpg',
-    alt: 'Children learning together on a tablet, leaning in and pointing at the screen',
+    src: '/photography/foundation-access.jpg?v=2',
+    alt: 'Three young Black African schoolchildren gathered around a tablet, leaning in and pointing at the screen',
     caption: 'Access · learning · opportunity',
     label: 'IMG/04 · Foundation',
-    width: 1200,
-    height: 832,
+    width: 1344,
+    height: 768,
   },
 } satisfies Record<string, MediaSlot>
