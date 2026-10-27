@@ -22,6 +22,11 @@ const productVisuals: Partial<Record<string, string>> = {
   // trial signup — best 3 of 4) composited as one fan visual; ?v=2 busts the
   // cache of the earlier single-screenshot asset at the same path.
   'niwms': '/work-done/niwms-og.png?v=2',
+  // TicketUganda: the two real product screenshots (homepage hero, sign-in
+  // with the ADMIT ONE QR ticket) composited as one diagonal-cascade visual.
+  // The two supplied flat illustrations were left out on purpose — they carry
+  // placeholder dummy text ("EVENT NAME", "BUY PURCHASE") and filler labels.
+  'ticketug': '/work-done/ticket-uganda-card.png',
   // DMS / UFMI DIMS registration-flow screens supplied by the client
   // (join path, business details, review & submit) composited as one visual.
   'dms': '/work-done/dms-og.png',
