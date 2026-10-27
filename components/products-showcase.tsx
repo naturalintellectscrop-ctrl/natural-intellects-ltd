@@ -9,12 +9,14 @@ import { Status } from '@/components/site-chrome'
 // Real, supplied product visuals only. Products without a published interface
 // render an honest typographic sheet instead of a mock screen.
 const productVisuals: Partial<Record<string, string>> = {
-  // Verified assets: Smart Ride mark fetched from the official product (smartrideug.vercel.app/og-image.png).
+  // Smart Ride: client-supplied app screens (rider home, brand splash, driver
+  // online — best 3 of 5) composited as one phone-fan visual. The OG mark at
+  // smart-ride-og.png remains in use by the work-archive strip.
   // House For Rent logo: the supplied asset files were cross-named at the source —
   // "smart-ride.png" actually contains the House For Rent logo and "house-for-rent.jpg"
   // contains a Smart Ride-branded image. The real HFR logo is served here under an
   // honest filename (house-for-rent-logo.png) to prevent future mix-ups.
-  'smart-ride': '/work-done/smart-ride-og.png',
+  'smart-ride': '/work-done/smart-ride-card.png',
   'house-for-rent': '/work-done/house-for-rent-logo.png',
   // NIWMS interface screens supplied by the client (product story, pricing,
   // trial signup — best 3 of 4) composited as one fan visual; ?v=2 busts the
