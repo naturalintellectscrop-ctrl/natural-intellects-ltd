@@ -12,12 +12,15 @@ const productVisuals: Partial<Record<string, string>> = {
   // Smart Ride: client-supplied app screens (rider home, brand splash, driver
   // online — best 3 of 5) composited as one phone-fan visual. The OG mark at
   // smart-ride-og.png remains in use by the work-archive strip.
-  // House For Rent logo: the supplied asset files were cross-named at the source —
-  // "smart-ride.png" actually contains the House For Rent logo and "house-for-rent.jpg"
-  // contains a Smart Ride-branded image. The real HFR logo is served here under an
-  // honest filename (house-for-rent-logo.png) to prevent future mix-ups.
+  // House For Rent: client-supplied real screens (sign-in with the "Every home
+  // here has been visited" brand panel + the field-verification page with the
+  // Kampala house photo) composited as one diagonal-cascade visual. The supplied
+  // marketing poster was left out on purpose — promotional collateral, not a raw
+  // interface, and too text-dense to read at card scale. Supersedes the logo-only
+  // card (house-for-rent-logo.png, removed — recoverable from git history; it had
+  // itself been rescued from cross-named source files).
   'smart-ride': '/work-done/smart-ride-card.png',
-  'house-for-rent': '/work-done/house-for-rent-logo.png',
+  'house-for-rent': '/work-done/house-for-rent-card.png',
   // NIWMS interface screens supplied by the client (product story, pricing,
   // trial signup — best 3 of 4) composited as one fan visual; ?v=2 busts the
   // cache of the earlier single-screenshot asset at the same path.
