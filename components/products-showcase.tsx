@@ -18,6 +18,9 @@ const productVisuals: Partial<Record<string, string>> = {
   'house-for-rent': '/work-done/house-for-rent-logo.png',
   // NIWMS interface screenshot supplied by the client (landing + dashboard view).
   'niwms': '/work-done/niwms-og.png',
+  // DISMs / UFMI DIMS registration-flow screens supplied by the client
+  // (join path, business details, review & submit) composited as one visual.
+  'disms': '/work-done/disms-og.png',
 }
 
 function monogram(name: string) {
