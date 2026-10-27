@@ -47,7 +47,7 @@ function ProductCardFace({ item, index, image, isActive }: { item: Product; inde
   return <div className="relative w-full overflow-hidden rounded-sm border border-line/80 bg-background/95 p-2 shadow-[0_24px_80px_rgba(0,0,0,.6)] sm:p-3">
     <div className="flex items-center gap-2 border-b border-line pb-2"><span className={`size-1.5 rounded-full ${item.status === 'ACTIVE' ? 'bg-accent' : 'bg-line'}`} /><span className="size-1.5 rounded-full bg-line" /><span className="size-1.5 rounded-full bg-line" /><span className="ml-2 truncate font-mono text-[9px] uppercase tracking-widest text-muted">{item.slug} / {item.status}</span></div>
     {image ? (
-      <div className="flex min-h-[15rem] items-center justify-center overflow-hidden bg-panel p-3 sm:min-h-[22rem] sm:p-4"><img src={image} alt={isActive ? `${item.name} product visual` : ''} className="max-h-[22rem] max-w-full object-contain sm:max-h-[26rem]" /></div>
+      <div className="flex min-h-[16rem] items-center justify-center overflow-hidden bg-panel p-3 sm:min-h-[23rem] sm:p-4"><img src={image} alt={isActive ? `${item.name} product visual` : ''} className="max-h-[24rem] max-w-full object-contain sm:max-h-[29rem]" /></div>
     ) : (
       <div className="grid-lines flex min-h-[15rem] flex-col items-start justify-between bg-panel p-5 sm:min-h-[22rem] sm:p-8"><span className="eyebrow">NI system sheet</span><div className="font-mono text-6xl tracking-tight text-accent sm:text-8xl">{monogram(item.name)}</div><p className="font-mono text-[9px] uppercase tracking-[.18em] text-muted">Interface preview not published · {item.category}</p></div>
     )}
@@ -116,7 +116,7 @@ export function ProductsShowcase() {
                 const isActive = distance === 0
                 const visibleDistance = Math.min(distance, 3)
                 return <div key={item.slug} aria-hidden={!isActive} className={`absolute inset-0 flex items-center justify-center ${reducedMotion ? 'transition-opacity duration-200' : 'transition-[transform,opacity,filter] duration-[800ms] ease-[cubic-bezier(.22,.8,.24,1)] will-change-[transform,opacity,filter]'}`} style={{ zIndex: isActive ? 20 : 10 - visibleDistance, opacity: isActive ? 1 : visibleDistance === 1 ? .58 : visibleDistance === 2 ? .3 : .14, transform: `translate(${isActive ? 0 : visibleDistance % 2 ? -5 : 5}%, ${isActive ? 0 : visibleDistance * 3}px) scale(${isActive ? 1 : 1 - visibleDistance * .055}) rotate(${isActive ? 0 : visibleDistance % 2 ? -1.2 : 1.2}deg)`, filter: isActive ? 'none' : `blur(${visibleDistance * 1.5}px) grayscale(${visibleDistance * 18}%)`, transformOrigin: isActive ? 'center center' : `${visibleDistance % 2 ? '42%' : '58%'} center`, transitionDelay: reducedMotion ? '0ms' : `${Math.max(0, 3 - visibleDistance) * 35}ms`, pointerEvents: isActive ? undefined : 'none' }}>
-                  <div className="w-[78%] sm:w-[68%]"><ProductCardFace item={item} index={index} image={image} isActive={isActive} /></div>
+                  <div className="w-[84%] sm:w-[73%]"><ProductCardFace item={item} index={index} image={image} isActive={isActive} /></div>
                 </div>
               })}
               {flip && (() => {
@@ -124,7 +124,7 @@ export function ProductsShowcase() {
                 const image = productVisuals[item.slug]
                 return <div key={`turn-${flip.nonce}`} aria-hidden="true" className="pointer-events-none absolute inset-0 z-40" style={{ perspective: '1800px' }}>
                   <div className="absolute inset-0 flex items-center justify-center">
-                    <div className={`relative w-[78%] transform-gpu will-change-transform sm:w-[68%] ${flip.dir === 1 ? 'ni-page-open' : 'ni-page-close'}`}>
+                    <div className={`relative w-[84%] transform-gpu will-change-transform sm:w-[73%] ${flip.dir === 1 ? 'ni-page-open' : 'ni-page-close'}`}>
                       <ProductCardFace item={item} index={flip.page} image={image} isActive />
                       <div className={`ni-page-shade ${flip.dir === 1 ? 'ni-page-shade--open' : 'ni-page-shade--close'}`} />
                     </div>
