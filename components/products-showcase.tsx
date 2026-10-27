@@ -16,6 +16,8 @@ const productVisuals: Partial<Record<string, string>> = {
   // honest filename (house-for-rent-logo.png) to prevent future mix-ups.
   'smart-ride': '/work-done/smart-ride-og.png',
   'house-for-rent': '/work-done/house-for-rent-logo.png',
+  // NIWMS interface screenshot supplied by the client (landing + dashboard view).
+  'niwms': '/work-done/niwms-og.png',
 }
 
 function monogram(name: string) {
