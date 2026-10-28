@@ -18,7 +18,7 @@ export default function Home() {
 
   {/* WHAT NI IS — identity kept, explained in plain language immediately */}
   <section id="top" className="grid-lines relative flex min-h-[760px] items-end overflow-hidden border-b border-line px-6 pb-20 pt-40 lg:min-h-screen lg:px-10 lg:pb-24">
-    <div className="pointer-events-none absolute right-[-8%] top-[18%] size-[560px] lg:size-[760px]"><div className="technical-orbit absolute inset-0 rounded-full border border-accent/50"><Orbit className="absolute -left-4 top-1/2 size-8 text-accent" /></div><HeroGlobe className="absolute left-1/2 top-1/2 size-[58%] -translate-x-1/2 -translate-y-1/2 text-accent" /></div>
+    <div className="pointer-events-none absolute left-1/2 top-1/2 size-[min(560px,88vw)] -translate-x-1/2 -translate-y-1/2 lg:size-[min(760px,82vh)]"><div className="technical-orbit absolute inset-0 rounded-full border border-accent/50"><Orbit className="absolute -left-4 top-1/2 size-8 text-accent" /></div><HeroGlobe className="absolute left-1/2 top-1/2 size-[58%] -translate-x-1/2 -translate-y-1/2 text-accent" /></div>
     <div className="pointer-events-none relative mx-auto w-full max-w-screen-2xl">
       <div className="eyebrow mb-8 reveal">Uganda / Technology &amp; Innovation</div>
       <h1 className="pointer-events-none max-w-6xl text-balance text-[clamp(3.8rem,10vw,9.8rem)] font-medium leading-[.88] tracking-[-.075em] reveal"><PaintRevealText accessibleLabel="Tech Over, NI." className="paint-hero" radius={42}>Tech<br /><span className="text-accent" aria-hidden="true">Over,</span> NI.</PaintRevealText></h1>
