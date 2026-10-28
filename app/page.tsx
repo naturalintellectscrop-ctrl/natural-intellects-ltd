@@ -9,34 +9,16 @@ import { ServicesSection } from '@/components/services-section'
 import { PaintRevealText } from '@/components/paint-reveal-text'
 import { ProductsShowcase } from '@/components/products-showcase'
 import { PhotoPlate } from '@/components/photo-plate'
+import { HeroGlobe } from '@/components/hero-globe'
 
 const Card = ({ href, number, title, description, status }: { href: string; number?: string; title: string; description: string; status?: string }) => <Link href={href} className="group reveal-card flex min-h-64 flex-col justify-between border border-line bg-panel p-6 hover:-translate-y-1 hover:border-accent sm:p-8"><div className="flex items-start justify-between gap-4"><span className="eyebrow">{number ?? 'NI'}</span>{status && <Status value={status} />}</div><div><h3 className="text-2xl tracking-tight group-hover:text-accent">{title}</h3><p className="mt-3 max-w-sm text-sm leading-relaxed text-muted">{description}</p><ArrowUpRight className="mt-7 size-5 text-muted group-hover:translate-x-1 group-hover:-translate-y-1 group-hover:text-accent" /></div></Link>
-
-// Wireframe globe inside the hero orbit: a fixed outline and latitude chords,
-// plus four meridian ellipses whose scaleX oscillates (1 = hugging the
-// silhouette, ~0 = crossing the face as a near-straight line) — the flat 2D
-// projection of a spinning transparent globe. The 18s period is shared with
-// the orbit ring, so ring, satellite and meridians turn on one rhythm.
-function GlobeWire({ className }: { className?: string }) {
-  return <svg viewBox="0 0 200 200" fill="none" aria-hidden="true" className={className}>
-    <g transform="rotate(-14 100 100)" stroke="currentColor" strokeWidth={1}>
-      <circle cx="100" cy="100" r="98" strokeOpacity=".9" vectorEffect="non-scaling-stroke" />
-      <line x1="2" y1="100" x2="198" y2="100" strokeOpacity=".45" vectorEffect="non-scaling-stroke" />
-      <line x1="7.8" y1="67" x2="192.2" y2="67" strokeOpacity=".35" vectorEffect="non-scaling-stroke" />
-      <line x1="7.8" y1="133" x2="192.2" y2="133" strokeOpacity=".35" vectorEffect="non-scaling-stroke" />
-      <line x1="27.6" y1="34" x2="172.4" y2="34" strokeOpacity=".3" vectorEffect="non-scaling-stroke" />
-      <line x1="27.6" y1="166" x2="172.4" y2="166" strokeOpacity=".3" vectorEffect="non-scaling-stroke" />
-      {[0, -4.5, -9, -13.5].map((delay) => <ellipse key={delay} cx="100" cy="100" rx="98" ry="98" strokeOpacity=".8" vectorEffect="non-scaling-stroke" className="globe-meridian" style={{ animationDelay: `${delay}s` }} />)}
-    </g>
-  </svg>
-}
 
 export default function Home() {
   return <main id="main"><SiteNav />
 
   {/* WHAT NI IS — identity kept, explained in plain language immediately */}
   <section id="top" className="grid-lines relative flex min-h-[760px] items-end overflow-hidden border-b border-line px-6 pb-20 pt-40 lg:min-h-screen lg:px-10 lg:pb-24">
-    <div className="pointer-events-none absolute right-[-8%] top-[18%] size-[560px] lg:size-[760px]"><div className="technical-orbit absolute inset-0 rounded-full border border-accent/50"><Orbit className="absolute -left-4 top-1/2 size-8 text-accent" /></div><GlobeWire className="absolute left-1/2 top-1/2 size-[58%] -translate-x-1/2 -translate-y-1/2 text-accent" /></div>
+    <div className="pointer-events-none absolute right-[-8%] top-[18%] size-[560px] lg:size-[760px]"><div className="technical-orbit absolute inset-0 rounded-full border border-accent/50"><Orbit className="absolute -left-4 top-1/2 size-8 text-accent" /></div><HeroGlobe className="absolute left-1/2 top-1/2 size-[58%] -translate-x-1/2 -translate-y-1/2 text-accent" /></div>
     <div className="relative mx-auto w-full max-w-screen-2xl">
       <div className="eyebrow mb-8 reveal">Uganda / Technology &amp; Innovation</div>
       <h1 className="max-w-6xl text-balance text-[clamp(3.8rem,10vw,9.8rem)] font-medium leading-[.88] tracking-[-.075em] reveal"><PaintRevealText accessibleLabel="Tech Over, NI." className="paint-hero" radius={42}>Tech<br /><span className="text-accent" aria-hidden="true">Over,</span> NI.</PaintRevealText></h1>

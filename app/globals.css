@@ -96,18 +96,11 @@ body { margin:0; background:var(--background); color:var(--foreground); font-fam
   .foundation-page .foundation-orbit-ring, .foundation-page .foundation-pixel-field i, .foundation-page .deep-press-wave { animation:none!important; }
 }
 @keyframes grid-drift { from { background-position:0 0,0 0; } to { background-position:64px 64px,64px 64px; } }
-/* Wireframe globe (hero): each meridian ellipse oscillates scaleX 1 -> .04 -> 1,
-which projects exactly like longitude lines sweeping around a transparent
-spinning globe — silhouette edge, curved, centre line, curved, edge.
-cubic-bezier(.37,0,.63,1) per segment approximates the cosine of a true
-rotation; transform-box:fill-box pins the squashing to each ellipse's own
-centre. 18s period = the orbit ring's, so ring, satellite and meridians turn
-together. Frozen by the global reduced-motion rule (meridians then sit at the
-silhouette, leaving a clean static wireframe). */
-@keyframes ni-meridian { 0% { transform:scaleX(1); animation-timing-function:cubic-bezier(.37,0,.63,1); } 50% { transform:scaleX(.04); animation-timing-function:cubic-bezier(.37,0,.63,1); } 100% { transform:scaleX(1); } }
+/* Hero globe is now a real orthographic projection spun in JS
+   (components/hero-globe.tsx) — no CSS keyframes involved here. It honours
+   prefers-reduced-motion in JS and pauses itself while offscreen. */
 @media (prefers-reduced-motion:no-preference) {
   .grid-lines { animation:grid-drift 22s linear infinite; }
-  .globe-meridian { animation:ni-meridian 18s linear infinite; transform-box:fill-box; transform-origin:center; }
   .group:hover .eyebrow { letter-spacing:.22em; transition:letter-spacing .35s ease; }
   .group:hover svg { transition:transform .35s cubic-bezier(.22,1,.36,1); }
   .archive-toggle:hover { transform:translateX(3px); }
