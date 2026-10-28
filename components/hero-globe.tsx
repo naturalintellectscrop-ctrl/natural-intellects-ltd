@@ -13,14 +13,21 @@ type LandData = { africa: LandCoords; other: LandCoords }
 // rotations" now carries real geography. Africa is filled at near-full accent
 // strength and faces the viewer on first paint (20°E centred); the rest of the
 // world renders dimmed and oceans stay fully transparent. A faint graticule
-// keeps the wireframe heritage of the element it replaced. One revolution ≈
-// 55s in the physically correct direction (surface drifts west→east). Frozen
-// to a static Africa-centred frame under prefers-reduced-motion; the rAF loop
-// pauses while the globe is offscreen. If the land data fails to load, the
-// globe degrades to rim + graticule so the hero never shows an empty circle.
+// keeps the wireframe heritage of the element it replaced.
+//
+// Spin: one revolution averages ~55s, in the physically correct direction
+// (surface drifts west→east), but the angular rate is modulated — the
+// Africa-facing hemisphere glides ~4× slower while the far side sweeps
+// quickly (rate ∝ 1 − DWELL·cos(angle)). Africa therefore sits comfortably in
+// view for roughly two-thirds of every cycle — it is "mostly" the globe we
+// see — yet the rotation never stalls or reverses. Frozen to a static
+// Africa-centred frame under prefers-reduced-motion; the rAF loop pauses
+// while the globe is offscreen. If the land data fails to load, the globe
+// degrades to rim + graticule so the hero never shows an empty circle.
 const LON0 = 20 // longitude centred on first paint — Gulf of Guinea / Congo basin
 const LAT0 = 8 // slight northern tilt so the sphere reads as a lit 3D body
-const REVOLVE_S = 55
+const REVOLVE_S = 55 // average seconds per full revolution
+const DWELL = 0.75 // rate dip at the Africa-facing side (slow: 1−.75, fast: 1+.75)
 
 const asMulti = (coordinates: LandCoords): { type: 'MultiPolygon'; coordinates: LandCoords } => ({ type: 'MultiPolygon', coordinates })
 
@@ -55,7 +62,12 @@ export function HeroGlobe({ className }: { className?: string }) {
     }
 
     const tick = (now: number) => {
-      if (last) angle = (angle + ((now - last) / 1000) * (360 / REVOLVE_S)) % 360
+      if (last) {
+        const dt = Math.min((now - last) / 1000, 0.1)
+        // modulated rate: cos dips the speed while Africa is front-and-centre,
+        // doubles it around the back — mean rate stays 360°/REVOLVE_S
+        angle = (angle + dt * (360 / REVOLVE_S) * (1 - DWELL * Math.cos((angle * Math.PI) / 180))) % 360
+      }
       last = now
       draw(angle)
       raf = requestAnimationFrame(tick)
