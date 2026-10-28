@@ -33,6 +33,13 @@ const productVisuals: Partial<Record<string, string>> = {
   // DMS / UFMI DIMS registration-flow screens supplied by the client
   // (join path, business details, review & submit) composited as one visual.
   'dms': '/work-done/dms-og.png',
+  // NISMS school-operations platform: the two real authenticated screens
+  // (admin dashboard with the needs-attention panel, finance Balances with the
+  // fees ledger) composited as one diagonal-cascade visual. Sources were cropped
+  // to their real content — both carried large empty white areas below the fold.
+  // The supplied marketing hero was left out on purpose: card standard across
+  // the carousel is honest real UI, not marketing material.
+  'nisms': '/work-done/nisms-card.png',
 }
 
 function monogram(name: string) {
